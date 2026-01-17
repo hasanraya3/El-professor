@@ -18,6 +18,24 @@ def welcome(message):
     welcome_text = "🔥 **أهلاً بك في Elprofessor Agents** 🔥\n\nاختر من الخيارات أدناه للبدء:"
     bot.send_message(message.chat.id, welcome_text, reply_markup=markup, parse_mode="Markdown")
 
+# برمجة الأفعال عند الضغط على الأزرار
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    if call.data == "register":
+        bot.send_message(call.message.chat.id, "📝 للبدء، يرجى إرسال اسمك الكامل ورقم هاتفك.")
+    
+    elif call.data == "deposit":
+        bot.send_message(call.message.chat.id, "💰 للشحن، يرجى تحويل المبلغ إلى المحفظة رقم: `123456789` ثم أرسل صورة التحويل هنا.")
+    
+    elif call.data == "withdraw":
+        bot.send_message(call.message.chat.id, "💸 يرجى كتابة المبلغ الذي تود سحبه ورقم حسابك.")
+    
+    elif call.data == "admin":
+        # هنا التعديل لإظهار رقم هاتفك
+        phone_number = "+96176376296" # استبدل الـ X برقمك الحقيقي
+        bot.send_contact(call.message.chat.id, phone_number, "البروفيسور")
+        bot.send_message(call.message.chat.id, f"📞 يمكنك أيضاً مراسلتي مباشرة عبر واتساب أو اتصال على: {phone_number}")
+
 if __name__ == "__main__":
-    print("El-professor Bot is LIVE...")
+    print("El-professor Bot is Updated with Phone Support...")
     bot.infinity_polling()
